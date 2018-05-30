@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Welcome</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltreview/styles.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <h1>Welcome!</h1>
+        <div id="register">
+            <h2>Register</h2>
+            {% if messages %}
+            <ul class="messages">
+                {% for message in messages %}
+                <li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+                {% endfor %}
+            </ul>
+            {% endif %}
+            <form action="/register" method="POST">
+                {% csrf_token %}
+                Name:<input type="text" name="name"><br><br> 
+                Alias:<input type="text" name="alias"><br><br>
+                Email:<input type="text" name="email"><br><br>
+                Password:<input type="password" name="password"><br>
+                <p>*Password should be at least 8 characters</p><br><br>
+                Confirm PW:<input type="password" name="confpw"><br><br>
+                <!-- Birthday<input type="text" name="bday"><br><br> -->
+                <input type="submit" value="Register">
+            </form>
+        </div>
+        <div id="login">
+            <h2>Login</h2>
+            <form action="/login" method="POST">
+                {% csrf_token %}
+                Email:<input type="text" name="email"><br><br>
+                Password:<input type="password" name="password"><br><br>
+                <input type="submit" value="Login">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

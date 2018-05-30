@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Add Book and Review</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltreview/styles.css' %}">
+</head>
+<body>
+    <a href="/books">Home</a><a href="/logout">Logout</a>
+    <div id="reviews">
+        <h3>{{book.title}}</h3>
+        <h4>Author: {{book.author.name}}</h4>
+        <h3>Reviews:</h3>
+        {%for review in reviews%}
+            <h4>Rating:</h4> {{review.rating}}
+
+            <p><a href="/users/{{review.user.id}}"> {{review.user.alias}} </a> says: {{review.content}} </p>
+            <p>Posted on: {{review.created_at}}</p>
+            {% if review.user.id == request.session.id %}
+                <a href='/users/{{review.id}}/delete'>Delete this Review</a>
+            {% endif %}
+        {% endfor %}
+    </div>
+    <div id="add">
+        <form action="/books/{{book.id}}/add_review" method="POST">
+            {% csrf_token %}
+            <h4>Add a Review:</h4>
+            <textarea rows="6" cols="50" name="book_review"></textarea>
+            <h3>Rating:</h3> 
+            <select name="rating">
+                <option class="one">1</option>
+                <option class="two">2</option>
+                <option class="three">3</option>
+                <option class="four">4</option>
+                <option class="five">5</option>
+            </select>
+            <input type="submit" value="Submit Review">
+        </form>
+    </div>
+</body>
+</html>

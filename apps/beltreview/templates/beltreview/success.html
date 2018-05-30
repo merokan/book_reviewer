@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Books Home</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'beltreview/styles.css' %}">
+</head>
+<body>
+    <div id="wrapper">
+        <a href="/books/add">Add Book and Review</a><a href="/logout">Logout</a>
+        <h1>Welcome, {{ user.alias }}!</h1>
+        <div id="recent_reviews">
+            <h2>Recent Book Reviews:</h2>
+            {%for review in reviews%}
+                <p><a href="/books/{{review.book.id}}">{{review.book.title}}</a></p>
+                <h4>Rating:</h4> <p> {{review.rating}}</p> 
+                <p><a href="/users/{{review.user.id}}"> {{review.user.alias}} </a> says: {{review.content}} </p>
+                <p>Posted on: {{review.created_at}}</p>
+            {%endfor%}
+        </div>
+        <div id="other_reviews">
+            <h2>Other Books with Reviews</h2>
+            <div id="scroll"></div>
+            {%for book in books%}
+                <p><a href="/books/{{book.id}}">{{ book.title }}</a></p>
+            {%endfor%}
+            </div>  
+        </div>
+    </div>
+</body>
+</html>
